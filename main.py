@@ -3,4 +3,5 @@
 import generalist
 
 if __name__ == '__main__':
-    generalist.login_user()
+    token = generalist.login_user()
+    print('GOT TOKEN:', token)

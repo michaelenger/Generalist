@@ -1,8 +1,9 @@
-"""Generalist."""
+"""Generalist functionality."""
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import urllib.parse
 import threading
+from typing import Optional
 import webbrowser
 
 from generalist import config
@@ -35,9 +36,8 @@ class AuthServer(BaseHTTPRequestHandler):
 
             print('ACCESS TOKEN', access_token)
 
-            file = open(config.ACCESS_TOKEN_FILE, 'w')
-            file.write(access_token)
-            file.close()
+            with open(config.ACCESS_TOKEN_FILE, 'w') as file:
+                file.write(access_token)
 
             threading.Thread(target=self.server.shutdown, daemon=True).start() 
 
@@ -49,8 +49,22 @@ class AuthServer(BaseHTTPRequestHandler):
         return
 
 
-def login_user():
-    """Login the user."""
+def _read_access_token() -> Optional[str]:
+    """Read the access token from the file."""
+    try:
+        with open(config.ACCESS_TOKEN_FILE, 'r') as file:
+            access_token = file.readline()
+        return access_token
+    except Exception:
+        return None
+
+
+def login_user() -> Optional[str]:
+    """Login the user, if need be, returning the access token."""
+    access_token = _read_access_token()
+    if access_token is not None:
+        return access_token
+
     url = spotify.get_login_url()
 
     server = HTTPServer(('localhost', config.SERVER_PORT), AuthServer)
@@ -59,3 +73,5 @@ def login_user():
     webbrowser.open(url, new=2)
 
     server.serve_forever()
+
+    return _read_access_token()  # assumes it all works
