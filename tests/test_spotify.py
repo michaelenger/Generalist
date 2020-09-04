@@ -18,40 +18,44 @@ def _mock_response(status_code: int, data: object) -> requests.Response:
     return response
 
 
-@pytest.mark.parametrize('uri, token, response', [
-    ('/me', 'token', {'id': 123, 'name': 'UserMan'}),
-    ('/artists/321', 'safetyfirst', {'id': 123, 'name': '🥶'}),
+@pytest.mark.parametrize('uri, token, query_params, response', [
+    ('/me', 'token', None, {'id': 123, 'name': 'UserMan'}),
+    ('/artists/321', 'safetyfirst', None, {'id': 123, 'name': '🥶'}),
+    ('/tracks', 'yes', {'limit': 0}, {'items': []}),
 ])
 @patch('generalist.spotify.requests')
-def test_get(requests_mock, uri, token, response):
+def test_get(requests_mock, uri, token, query_params, response):
     requests_mock.get.return_value = _mock_response(200, response)
 
-    result = spotify._get(uri, token)
+    result = spotify._get(uri, token, query_params)
 
     assert result == response
 
     requests_mock.get.assert_called_with(
         f'https://api.spotify.com/v1{uri}',
-        headers={'Authorization': f'Bearer {token}'})
+        headers={'Authorization': f'Bearer {token}'},
+        params=query_params)
 
 
-@pytest.mark.parametrize('uri, token, error', [
-    ('/me', 'token', 'Something bad'),
-    ('/artists/321', 'safetyfirst', 'Not today, satan'),
+@pytest.mark.parametrize('uri, token, query_params, error', [
+    ('/me', 'token', None, 'Something bad'),
+    ('/artists/321', 'safetyfirst', None, 'Not today, satan'),
+    ('/tracks', 'yes', {'limit': 0}, 'Cannot find it'),
 ])
 @patch('generalist.spotify.requests')
-def test_get_fail(requests_mock, uri, token, error):
+def test_get_fail(requests_mock, uri, token, query_params, error):
     requests_mock.get.return_value = _mock_response(
         400, {'error_description': error})
 
     with pytest.raises(Exception) as err:
-        spotify._get(uri, token)
+        spotify._get(uri, token, query_params)
 
     assert str(err.value) == error
 
     requests_mock.get.assert_called_with(
         f'https://api.spotify.com/v1{uri}',
-        headers={'Authorization': f'Bearer {token}'})
+        headers={'Authorization': f'Bearer {token}'},
+        params=query_params)
 
 
 @patch('generalist.spotify._get')
@@ -92,22 +96,12 @@ def test_get_saved_tracks(get_mock):
         'total': 53
     }
 
-    result = spotify.get_saved_tracks('token')
+    result = spotify.get_saved_tracks('token', 10)
 
     assert result == track_data
 
-    get_mock.assert_called_with('/me/tracks', 'token')
-
-
-@patch('generalist.spotify.requests')
-def test_get_saved_tracks_fail(requests_mock):
-    requests_mock.get.return_value = _mock_response(
-        500, {'error_description': 'Something bad'})
-
-    with pytest.raises(Exception) as err:
-        spotify.get_saved_tracks('token')
-
-    assert str(err.value) == 'Something bad'
+    get_mock.assert_called_with(
+        '/me/tracks', 'token', {'offset': 10, 'limit': 50})
 
 
 @patch('generalist.spotify.requests')

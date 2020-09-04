@@ -1,6 +1,7 @@
 """Functions for communicating with the Spotify API."""
 
 from base64 import b64encode
+from typing import Optional
 import urllib.parse
 
 import requests
@@ -8,11 +9,15 @@ import requests
 from generalist import config
 
 
-def _get(uri: str, access_token: str) -> dict:
+def _get(
+        uri: str, access_token: str,
+        query_params: Optional[dict] = None) -> dict:
     """Send a GET request to the Spotify API."""
     url = f'https://api.spotify.com/v1{uri}'
     response = requests.get(
-        url, headers={'Authorization': f'Bearer {access_token}'})
+        url,
+        params=query_params,
+        headers={'Authorization': f'Bearer {access_token}'})
 
     data = response.json()
     if response.status_code != 200:
@@ -42,7 +47,8 @@ def get_login_url() -> str:
 def get_saved_tracks(
         access_token: str, offset: int = 0, limit: int = 50) -> list:
     """Get a paginated list of the user's saved tracks."""
-    response = _get('/me/tracks', access_token)
+    response = _get(
+        '/me/tracks', access_token, {'offset': offset, 'limit': limit})
 
     return response['items']
 
