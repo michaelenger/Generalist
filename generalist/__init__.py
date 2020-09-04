@@ -34,12 +34,10 @@ class AuthServer(BaseHTTPRequestHandler):
 
             self.wfile.write(b'You can go back to the CLI script now.')
 
-            print('ACCESS TOKEN', access_token)
-
             with open(config.ACCESS_TOKEN_FILE, 'w') as file:
                 file.write(access_token)
 
-            threading.Thread(target=self.server.shutdown, daemon=True).start() 
+            threading.Thread(target=self.server.shutdown, daemon=True).start()
 
         except Exception as e:
             self.wfile.write(bytes('Error! ' + str(e), 'utf-8'))
