@@ -14,7 +14,7 @@ def get_login_url() -> str:
     query_params = {
         'client_id': config.SPOTIFY_CLIENT_ID,
         'response_type': 'code',
-        'scopes': 'user-library-read',
+        'scope': 'user-library-read',
         'redirect_uri': config.REDIRECT_URI
     }
 
