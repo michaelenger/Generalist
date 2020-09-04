@@ -11,10 +11,18 @@ Script for generating playlists based on the genres of your liked songs in Spoti
 
 ## Usage
 
+Create an application in the [Spotify Developer portal](https://developer.spotify.com/) and make sure that one of the redirect URIs is: `http://localhost:1337/auth`
+
 Install the dependencies:
 
 ```shell
 pip install -r requirements.txt
+```
+
+Create an environment file and fill it with your API credentials:
+
+```shell
+cp .env.shadow .env
 ```
 
 Run the script:
