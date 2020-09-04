@@ -1,18 +1,44 @@
 """Functions for communicating with the Spotify API."""
 
+from base64 import b64encode
 import urllib.parse
 
-from generalist.config import REDIRECT_URI
+import requests
+
+from generalist import config
 
 
-def get_login_url(client_id: str) -> str:
+def get_login_url() -> str:
     """Get the login URL."""
     base_url = 'https://accounts.spotify.com/authorize?'
     query_params = {
-        'client_id': client_id,
+        'client_id': config.SPOTIFY_CLIENT_ID,
         'response_type': 'code',
         'scopes': 'user-library-read',
-        'redirect_uri': REDIRECT_URI
+        'redirect_uri': config.REDIRECT_URI
     }
 
     return base_url + urllib.parse.urlencode(query_params)
+
+
+def request_access_token(code: str) -> str:
+    """Request an access token based on an authorization code."""
+    url = 'https://accounts.spotify.com/api/token'
+    payload = {
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': config.REDIRECT_URI
+    }
+    auth = b64encode(bytes(
+        f'{config.SPOTIFY_CLIENT_ID}:{config.SPOTIFY_CLIENT_SECRET}', 'utf-8'))
+
+    response = requests.post(
+        url, data=payload, headers={'Authorization': b'Basic ' + auth})
+
+    data = response.json()
+
+    if response.status_code != 200:
+        error = data['error_description']
+        raise Exception(f'Unable to get access token: {error}')
+
+    return data['access_token']
