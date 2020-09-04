@@ -30,3 +30,11 @@ Run the script:
 ```shell
 python main.py
 ```
+
+## Testing
+
+Just run the tests using `py.test`:
+
+```shell
+py.test tests
+```
