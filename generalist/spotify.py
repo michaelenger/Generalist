@@ -8,6 +8,20 @@ import requests
 from generalist import config
 
 
+def get_artist(access_token: str, artist_id: str) -> list:
+    """Get a paginated list of the user's saved tracks."""
+    url = f'https://api.spotify.com/v1/artists/{artist_id}'
+
+    response = requests.get(
+        url, headers={'Authorization': f'Bearer {access_token}'})
+
+    data = response.json()
+    if response.status_code != 200:
+        raise Exception(data['error_description'])
+
+    return data
+
+
 def get_login_url() -> str:
     """Get the login URL."""
     base_url = 'https://accounts.spotify.com/authorize?'

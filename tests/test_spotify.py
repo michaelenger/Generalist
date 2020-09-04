@@ -18,6 +18,30 @@ def _mock_response(status_code: int, data: object) -> requests.Response:
     return response
 
 
+@patch('generalist.spotify.requests')
+def test_get_artist(requests_mock, artist_btb):
+    requests_mock.get.return_value = _mock_response(200, artist_btb)
+
+    result = spotify.get_artist('token', 'id123')
+
+    assert result == artist_btb
+
+    requests_mock.get.assert_called_with(
+        'https://api.spotify.com/v1/artists/id123',
+        headers={'Authorization': 'Bearer token'})
+
+
+@patch('generalist.spotify.requests')
+def test_get_artist_fail(requests_mock):
+    requests_mock.get.return_value = _mock_response(
+        500, {'error_description': 'Go away now.'})
+
+    with pytest.raises(Exception) as err:
+        spotify.get_artist('token', 'id123')
+
+    assert str(err.value) == 'Go away now.'
+
+
 def test_get_login_url():
     result = spotify.get_login_url()
     expected = 'https://accounts.spotify.com/authorize' \
@@ -50,6 +74,10 @@ def test_get_saved_tracks(requests_mock):
     result = spotify.get_saved_tracks('token')
 
     assert result == track_data
+
+    requests_mock.get.assert_called_with(
+        'https://api.spotify.com/v1/me/tracks',
+        headers={'Authorization': 'Bearer token'})
 
 
 @patch('generalist.spotify.requests')
