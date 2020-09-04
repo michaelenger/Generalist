@@ -30,6 +30,40 @@ def test_get_login_url():
 
 
 @patch('generalist.spotify.requests')
+def test_get_saved_tracks(requests_mock):
+    track_data = [
+        {'id': '3U7puaLpj9buAdKd9QnuqD', 'name': 'Shameless self promotion'},
+        {'id': '2jpDioAB9tlYXMdXDK3BGl', 'name': 'Good Enough For Granddad'}
+    ]
+    response_data = {
+        'href': 'https://api.spotify.com/v1/me/tracks?offset=0&limit=20',
+        'items': track_data,
+        'limit': 20,
+        'next': 'https://api.spotify.com/v1/me/tracks?offset=20&limit=20',
+        'offset': 0,
+        'previous': None,
+        'total': 53
+    }
+
+    requests_mock.get.return_value = _mock_response(200, response_data)
+
+    result = spotify.get_saved_tracks('token')
+
+    assert result == track_data
+
+
+@patch('generalist.spotify.requests')
+def test_get_saved_tracks_fail(requests_mock):
+    requests_mock.get.return_value = _mock_response(
+        500, {'error_description': 'Something bad'})
+
+    with pytest.raises(Exception) as err:
+        spotify.get_saved_tracks('token')
+
+    assert str(err.value) == 'Something bad'
+
+
+@patch('generalist.spotify.requests')
 def test_request_access_token(requests_mock):
     requests_mock.post.return_value = _mock_response(
         200, {'access_token': 'hereiskeyok'})

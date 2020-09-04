@@ -21,6 +21,21 @@ def get_login_url() -> str:
     return base_url + urllib.parse.urlencode(query_params)
 
 
+def get_saved_tracks(
+        access_token: str, offset: int = 0, limit: int = 50) -> list:
+    """Get a paginated list of the user's saved tracks."""
+    url = 'https://api.spotify.com/v1/me/tracks'
+
+    response = requests.get(
+        url, headers={'Authorization': f'Bearer {access_token}'})
+
+    data = response.json()
+    if response.status_code != 200:
+        raise Exception(data['error_description'])
+
+    return data['items']
+
+
 def request_access_token(code: str) -> str:
     """Request an access token based on an authorization code."""
     url = 'https://accounts.spotify.com/api/token'
