@@ -8,10 +8,9 @@ import requests
 from generalist import config
 
 
-def get_artist(access_token: str, artist_id: str) -> list:
-    """Get a paginated list of the user's saved tracks."""
-    url = f'https://api.spotify.com/v1/artists/{artist_id}'
-
+def _get(uri: str, access_token: str) -> dict:
+    """Send a GET request to the Spotify API."""
+    url = f'https://api.spotify.com/v1{uri}'
     response = requests.get(
         url, headers={'Authorization': f'Bearer {access_token}'})
 
@@ -20,6 +19,11 @@ def get_artist(access_token: str, artist_id: str) -> list:
         raise Exception(data['error_description'])
 
     return data
+
+
+def get_artist(access_token: str, artist_id: str) -> list:
+    """Get a paginated list of the user's saved tracks."""
+    return _get(f'/artists/{artist_id}', access_token)
 
 
 def get_login_url() -> str:
@@ -38,16 +42,9 @@ def get_login_url() -> str:
 def get_saved_tracks(
         access_token: str, offset: int = 0, limit: int = 50) -> list:
     """Get a paginated list of the user's saved tracks."""
-    url = 'https://api.spotify.com/v1/me/tracks'
+    response = _get('/me/tracks', access_token)
 
-    response = requests.get(
-        url, headers={'Authorization': f'Bearer {access_token}'})
-
-    data = response.json()
-    if response.status_code != 200:
-        raise Exception(data['error_description'])
-
-    return data['items']
+    return response['items']
 
 
 def request_access_token(code: str) -> str:
