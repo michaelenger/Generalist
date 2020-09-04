@@ -10,6 +10,14 @@ from generalist import config
 from generalist import spotify
 
 
+def _mock_response(status_code: int, data: object) -> requests.Response:
+    """Make a mock Response object."""
+    response = requests.Response()
+    response.status_code = status_code
+    response._content = json.dumps(data).encode()
+    return response
+
+
 def test_get_login_url():
     result = spotify.get_login_url()
     expected = 'https://accounts.spotify.com/authorize' \
@@ -23,12 +31,8 @@ def test_get_login_url():
 
 @patch('generalist.spotify.requests')
 def test_request_access_token(requests_mock):
-    mock_response = requests.Response()
-    mock_response.status_code = 200
-    mock_response._content = json.dumps(
-        {'access_token': 'hereiskeyok'}).encode()
-
-    requests_mock.post.return_value = mock_response
+    requests_mock.post.return_value = _mock_response(
+        200, {'access_token': 'hereiskeyok'})
 
     result = spotify.request_access_token('letmein')
 
@@ -37,12 +41,8 @@ def test_request_access_token(requests_mock):
 
 @patch('generalist.spotify.requests')
 def test_request_access_token_fail(requests_mock):
-    mock_response = requests.Response()
-    mock_response.status_code = 400
-    mock_response._content = json.dumps(
-        {'error_description': 'no'}).encode()
-
-    requests_mock.post.return_value = mock_response
+    requests_mock.post.return_value = _mock_response(
+        400, {'error_description': 'no'})
 
     with pytest.raises(Exception) as err:
         spotify.request_access_token('letmein')
