@@ -1,6 +1,7 @@
 """Functions for communicating with the Spotify API."""
 
 from base64 import b64encode
+from typing import List
 from typing import Optional
 import urllib.parse
 
@@ -26,9 +27,9 @@ def _get(
     return data
 
 
-def get_artist(access_token: str, artist_id: str) -> list:
+def get_artists(access_token: str, artist_ids: List[str]) -> list:
     """Get a paginated list of the user's saved tracks."""
-    return _get(f'/artists/{artist_id}', access_token)
+    return _get(f'/artists', access_token, {'ids': ','.join(artist_ids)})
 
 
 def get_login_url() -> str:

@@ -59,14 +59,15 @@ def test_get_fail(requests_mock, uri, token, query_params, error):
 
 
 @patch('generalist.spotify._get')
-def test_get_artist(get_mock, artist_btb):
-    get_mock.return_value = artist_btb
+def test_get_artists(get_mock):
+    artist_data = {'id': '0qzgOvNnbHiArRuXgkJfFI'}
+    get_mock.return_value = artist_data
 
-    result = spotify.get_artist('token', 'id123')
+    result = spotify.get_artists('token', ['id123', 'lol', '🩰'])
 
-    assert result == artist_btb
+    assert result == artist_data
 
-    get_mock.assert_called_with('/artists/id123', 'token')
+    get_mock.assert_called_with('/artists', 'token', {'ids': 'id123,lol,🩰'})
 
 
 def test_get_login_url():
