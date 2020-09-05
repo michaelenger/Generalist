@@ -60,8 +60,10 @@ def test_get_fail(requests_mock, uri, token, query_params, error):
 
 @patch('generalist.spotify._get')
 def test_get_artists(get_mock):
-    artist_data = {'id': '0qzgOvNnbHiArRuXgkJfFI'}
-    get_mock.return_value = artist_data
+    artist_data = [{'id': '0qzgOvNnbHiArRuXgkJfFI'}]
+    get_mock.return_value = {
+        'artists': artist_data
+    }
 
     result = spotify.get_artists('token', ['id123', 'lol', '🩰'])
 
