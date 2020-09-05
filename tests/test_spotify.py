@@ -83,19 +83,19 @@ def test_get_login_url():
 
 @patch('generalist.spotify._get')
 def test_get_saved_tracks(get_mock):
-    track_data = [
-        {'id': '3U7puaLpj9buAdKd9QnuqD', 'name': 'Shameless self promotion'},
-        {'id': '2jpDioAB9tlYXMdXDK3BGl', 'name': 'Good Enough For Granddad'}
-    ]
-    get_mock.return_value = {
+    track_data = {
         'href': 'https://api.spotify.com/v1/me/tracks?offset=0&limit=20',
-        'items': track_data,
+        'items': [
+            {'id': '3U7puaLpj9buAdKd9QnuqD', 'name': 'Shameless self promotion'},
+            {'id': '2jpDioAB9tlYXMdXDK3BGl', 'name': 'Good Enough For Granddad'}
+        ],
         'limit': 20,
         'next': 'https://api.spotify.com/v1/me/tracks?offset=20&limit=20',
         'offset': 0,
         'previous': None,
         'total': 53
     }
+    get_mock.return_value = track_data
 
     result = spotify.get_saved_tracks('token', 10)
 

@@ -48,10 +48,7 @@ def get_login_url() -> str:
 def get_saved_tracks(
         access_token: str, offset: int = 0, limit: int = 50) -> list:
     """Get a paginated list of the user's saved tracks."""
-    response = _get(
-        '/me/tracks', access_token, {'offset': offset, 'limit': limit})
-
-    return response['items']
+    return _get('/me/tracks', access_token, {'offset': offset, 'limit': limit})
 
 
 def request_access_token(code: str) -> str:
