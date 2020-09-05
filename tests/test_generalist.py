@@ -23,6 +23,34 @@ def test_read_access_token_fail(open_mock):
     assert result is None
 
 
+@patch('generalist.spotify')
+def test_get_saved_tracks(spotify_mock, mock_artists, mock_saved_tracks):
+    spotify_mock.get_saved_tracks.side_effect = mock_saved_tracks
+    spotify_mock.get_artists.return_value = mock_artists
+
+    result = generalist.get_saved_tracks('token')
+
+    assert result == [
+        {'id': '0K9v3Jq3mI0phzWbeKAiqc',
+            'name': 'The Grey',
+            'artists': ['Beyond The Barricade'], 'genres': []},
+        {'id': '5CJ1xQCFywhEryVUPJup5T',
+            'name': 'The Boy Who Wouldn\'t Hoe Corn',
+            'artists': ['Alison Krauss & Union Station'],
+            'genres': ['bluegrass', 'folk', 'progressive bluegrass']},
+        {'id': '0K9v3Jq3mI0phzWbeKAiqc',
+            'name': 'The Grey',
+            'artists': ['Beyond The Barricade'], 'genres': []},
+        {'id': '5CJ1xQCFywhEryVUPJup5T',
+            'name': 'The Boy Who Wouldn\'t Hoe Corn',
+            'artists': ['Alison Krauss & Union Station'],
+            'genres': ['bluegrass', 'folk', 'progressive bluegrass']},
+        {'id': '0K9v3Jq3mI0phzWbeKAiqc',
+            'name': 'The Grey',
+            'artists': ['Beyond The Barricade'], 'genres': []},
+    ]
+
+
 @patch('generalist._read_access_token')
 @patch('generalist.HTTPServer')
 @patch('generalist.webbrowser')

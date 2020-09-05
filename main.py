@@ -2,6 +2,10 @@
 
 import generalist
 
+
 if __name__ == '__main__':
     token = generalist.login_user()
-    print('GOT TOKEN:', token)
+
+    tracks = generalist.get_saved_tracks(token)
+
+    print(tracks)

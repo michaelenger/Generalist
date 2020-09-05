@@ -57,6 +57,57 @@ def _read_access_token() -> Optional[str]:
         return None
 
 
+def get_saved_tracks(access_token: str):
+    """Get a list of all the user's saved tracks with their genres."""
+    tracks = []
+    artist_ids = set()
+    total = 0
+    offset = 0
+
+    while True:
+        response = spotify.get_saved_tracks(access_token, offset)
+        total = response['total']
+        items = response['items']
+
+        for item in items:
+            track = item['track']
+            track_artists = {
+                artist['id']: artist['name'] for artist in track['artists']}
+            tracks.append({
+                'id': track['id'],
+                'name': track['name'],
+                'artists': track_artists,
+                'genres': []
+            })
+
+            artist_ids.update(track_artists.keys())
+
+        offset = offset + len(items)
+
+        if len(tracks) >= total:
+            break
+
+    artist_ids = list(artist_ids)
+    artist_genres = {}
+    bunch_amount = 50  # the API supports max 50 artists per request
+
+    for i in range(0, len(artist_ids), bunch_amount):
+        artists = spotify.get_artists(
+            access_token, artist_ids[i:i+bunch_amount])
+        artist_genres = {
+            **artist_genres,
+            **{artist['id']: artist['genres'] for artist in artists}}
+
+    for track in tracks:
+        genres = set()
+        for artist_id in track['artists']:
+            genres.update(artist_genres[artist_id])
+        track['genres'] = sorted(genres)
+        track['artists'] = list(track['artists'].values())
+
+    return tracks
+
+
 def login_user() -> Optional[str]:
     """Login the user, if need be, returning the access token."""
     access_token = _read_access_token()
