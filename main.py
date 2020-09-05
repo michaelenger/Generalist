@@ -3,7 +3,7 @@
 import generalist
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     token = generalist.login_user()
 
     tracks = generalist.get_saved_tracks(token)

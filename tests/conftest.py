@@ -1,537 +1,497 @@
-'''Test config.'''
+"""Test config."""
 
 import pytest
 
 
 EXAMPLE_ARTISTS = [
     {
-        'external_urls': {
-            'spotify': 'https://open.spotify.com/artist/0OTnx2X2FDXeewcm72lavT'
+        "external_urls": {
+            "spotify": "https://open.spotify.com/artist/0OTnx2X2FDXeewcm72lavT"
         },
-        'followers': {
-            'href': None,
-            'total': 129276
-        },
-        'genres': [
-            'bluegrass',
-            'folk',
-            'progressive bluegrass'
+        "followers": {"href": None, "total": 129276},
+        "genres": ["bluegrass", "folk", "progressive bluegrass"],
+        "href": "https://api.spotify.com/v1/artists/0OTnx2X2FDXeewcm72lavT",
+        "id": "0OTnx2X2FDXeewcm72lavT",
+        "images": [
+            {
+                "height": 750,
+                "url": "https://i.scdn.co/image/6a03e3a6d54734c074359147022bd62b01490c06",
+                "width": 1000,
+            },
+            {
+                "height": 480,
+                "url": "https://i.scdn.co/image/742c79f195dd42ab7eb44ccdb57b968d1b401326",
+                "width": 640,
+            },
+            {
+                "height": 150,
+                "url": "https://i.scdn.co/image/15c821ed41c2101e495608474cc888bdbe64c936",
+                "width": 200,
+            },
+            {
+                "height": 48,
+                "url": "https://i.scdn.co/image/1a01ecd672999e8d42af00176e87de4494b9849f",
+                "width": 64,
+            },
         ],
-        'href': 'https://api.spotify.com/v1/artists/0OTnx2X2FDXeewcm72lavT',
-        'id': '0OTnx2X2FDXeewcm72lavT',
-        'images': [
-            {
-                'height': 750,
-                'url': 'https://i.scdn.co/image/6a03e3a6d54734c074359147022bd62b01490c06',
-                'width': 1000
-            },
-            {
-                'height': 480,
-                'url': 'https://i.scdn.co/image/742c79f195dd42ab7eb44ccdb57b968d1b401326',
-                'width': 640
-            },
-            {
-                'height': 150,
-                'url': 'https://i.scdn.co/image/15c821ed41c2101e495608474cc888bdbe64c936',
-                'width': 200
-            },
-            {
-                'height': 48,
-                'url': 'https://i.scdn.co/image/1a01ecd672999e8d42af00176e87de4494b9849f',
-                'width': 64
-            }
-        ],
-        'name': 'Alison Krauss & Union Station',
-        'popularity': 57,
-        'type': 'artist',
-        'uri': 'spotify:artist:0OTnx2X2FDXeewcm72lavT'
+        "name": "Alison Krauss & Union Station",
+        "popularity": 57,
+        "type": "artist",
+        "uri": "spotify:artist:0OTnx2X2FDXeewcm72lavT",
     },
     {
-        'external_urls': {
-            'spotify': 'https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI'
+        "external_urls": {
+            "spotify": "https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI"
         },
-        'followers': {
-            'href': None,
-            'total': 92
-        },
-        'genres': [],
-        'href': 'https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI',
-        'id': '0qzgOvNnbHiArRuXgkJfFI',
-        'images': [
+        "followers": {"href": None, "total": 92},
+        "genres": [],
+        "href": "https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI",
+        "id": "0qzgOvNnbHiArRuXgkJfFI",
+        "images": [
             {
-                'height': 640,
-                'url': 'https://i.scdn.co/image/d208d8bcdb0ac75f3a7a3638b9f478c3d2f720fa',
-                'width': 640
+                "height": 640,
+                "url": "https://i.scdn.co/image/d208d8bcdb0ac75f3a7a3638b9f478c3d2f720fa",
+                "width": 640,
             },
             {
-                'height': 320,
-                'url': 'https://i.scdn.co/image/da40951a12bb4cb8d60184f2979aabde25de7151',
-                'width': 320
+                "height": 320,
+                "url": "https://i.scdn.co/image/da40951a12bb4cb8d60184f2979aabde25de7151",
+                "width": 320,
             },
             {
-                'height': 160,
-                'url': 'https://i.scdn.co/image/c0784f7f00e470ef95032684c38102c755b65d78',
-                'width': 160
-            }
+                "height": 160,
+                "url": "https://i.scdn.co/image/c0784f7f00e470ef95032684c38102c755b65d78",
+                "width": 160,
+            },
         ],
-        'name': 'Beyond The Barricade',
-        'popularity': 3,
-        'type': 'artist',
-        'uri': 'spotify:artist:0qzgOvNnbHiArRuXgkJfFI'
-    }
+        "name": "Beyond The Barricade",
+        "popularity": 3,
+        "type": "artist",
+        "uri": "spotify:artist:0qzgOvNnbHiArRuXgkJfFI",
+    },
 ]
 
 EXAMPLE_SAVED_TRACKS_ONE = {
-    'href': 'https://api.spotify.com/v1/me/tracks?offset=0&limit=3',
-    'items': [
+    "href": "https://api.spotify.com/v1/me/tracks?offset=0&limit=3",
+    "items": [
         {
-            'added_at': '2020-09-04T16:43:19Z',
-            'track': {
-                'album': {
-                    'album_type': 'single',
-                    'artists': [
+            "added_at": "2020-09-04T16:43:19Z",
+            "track": {
+                "album": {
+                    "album_type": "single",
+                    "artists": [
                         {
-                            'external_urls': {
-                                'spotify': 'https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI'
+                            "external_urls": {
+                                "spotify": "https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI"
                             },
-                            'href': 'https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI',
-                            'id': '0qzgOvNnbHiArRuXgkJfFI',
-                            'name': 'Beyond The Barricade',
-                            'type': 'artist',
-                            'uri': 'spotify:artist:0qzgOvNnbHiArRuXgkJfFI'
+                            "href": "https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI",
+                            "id": "0qzgOvNnbHiArRuXgkJfFI",
+                            "name": "Beyond The Barricade",
+                            "type": "artist",
+                            "uri": "spotify:artist:0qzgOvNnbHiArRuXgkJfFI",
                         }
                     ],
-                    'available_markets': [
-                        '...'
-                    ],
-                    'external_urls': {
-                        'spotify': 'https://open.spotify.com/album/0STdARrArJi55I4zbeSbx6'
+                    "available_markets": ["..."],
+                    "external_urls": {
+                        "spotify": "https://open.spotify.com/album/0STdARrArJi55I4zbeSbx6"
                     },
-                    'href': 'https://api.spotify.com/v1/albums/0STdARrArJi55I4zbeSbx6',
-                    'id': '0STdARrArJi55I4zbeSbx6',
-                    'images': [
+                    "href": "https://api.spotify.com/v1/albums/0STdARrArJi55I4zbeSbx6",
+                    "id": "0STdARrArJi55I4zbeSbx6",
+                    "images": [
                         {
-                            'height': 640,
-                            'url': 'https://i.scdn.co/image/ab67616d0000b2734fbf0642c674ea17daba8a7a',
-                            'width': 640
+                            "height": 640,
+                            "url": "https://i.scdn.co/image/ab67616d0000b2734fbf0642c674ea17daba8a7a",
+                            "width": 640,
                         },
                         {
-                            'height': 300,
-                            'url': 'https://i.scdn.co/image/ab67616d00001e024fbf0642c674ea17daba8a7a',
-                            'width': 300
+                            "height": 300,
+                            "url": "https://i.scdn.co/image/ab67616d00001e024fbf0642c674ea17daba8a7a",
+                            "width": 300,
                         },
                         {
-                            'height': 64,
-                            'url': 'https://i.scdn.co/image/ab67616d000048514fbf0642c674ea17daba8a7a',
-                            'width': 64
-                        }
+                            "height": 64,
+                            "url": "https://i.scdn.co/image/ab67616d000048514fbf0642c674ea17daba8a7a",
+                            "width": 64,
+                        },
                     ],
-                    'name': 'The Grey',
-                    'release_date': '2018-05-03',
-                    'release_date_precision': 'day',
-                    'total_tracks': 5,
-                    'type': 'album',
-                    'uri': 'spotify:album:0STdARrArJi55I4zbeSbx6'
+                    "name": "The Grey",
+                    "release_date": "2018-05-03",
+                    "release_date_precision": "day",
+                    "total_tracks": 5,
+                    "type": "album",
+                    "uri": "spotify:album:0STdARrArJi55I4zbeSbx6",
                 },
-                'artists': [
+                "artists": [
                     {
-                        'external_urls': {
-                            'spotify': 'https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI'
+                        "external_urls": {
+                            "spotify": "https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI"
                         },
-                        'href': 'https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI',
-                        'id': '0qzgOvNnbHiArRuXgkJfFI',
-                        'name': 'Beyond The Barricade',
-                        'type': 'artist',
-                        'uri': 'spotify:artist:0qzgOvNnbHiArRuXgkJfFI'
+                        "href": "https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI",
+                        "id": "0qzgOvNnbHiArRuXgkJfFI",
+                        "name": "Beyond The Barricade",
+                        "type": "artist",
+                        "uri": "spotify:artist:0qzgOvNnbHiArRuXgkJfFI",
                     }
                 ],
-                'available_markets': [
-                    '...'
-                ],
-                'disc_number': 1,
-                'duration_ms': 388906,
-                'explicit': False,
-                'external_ids': {
-                    'isrc': 'NOJKW1801020'
+                "available_markets": ["..."],
+                "disc_number": 1,
+                "duration_ms": 388906,
+                "explicit": False,
+                "external_ids": {"isrc": "NOJKW1801020"},
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/track/0K9v3Jq3mI0phzWbeKAiqc"
                 },
-                'external_urls': {
-                    'spotify': 'https://open.spotify.com/track/0K9v3Jq3mI0phzWbeKAiqc'
-                },
-                'href': 'https://api.spotify.com/v1/tracks/0K9v3Jq3mI0phzWbeKAiqc',
-                'id': '0K9v3Jq3mI0phzWbeKAiqc',
-                'is_local': False,
-                'name': 'The Grey',
-                'popularity': 3,
-                'preview_url': 'https://p.scdn.co/mp3-preview/f7bf29379d5cd635c437cccabb05c6d0f46a3c39?cid=774b29d4f13844c495f206cafdad9c86',
-                'track_number': 2,
-                'type': 'track',
-                'uri': 'spotify:track:0K9v3Jq3mI0phzWbeKAiqc'
-            }
+                "href": "https://api.spotify.com/v1/tracks/0K9v3Jq3mI0phzWbeKAiqc",
+                "id": "0K9v3Jq3mI0phzWbeKAiqc",
+                "is_local": False,
+                "name": "The Grey",
+                "popularity": 3,
+                "preview_url": "https://p.scdn.co/mp3-preview/f7bf29379d5cd635c437cccabb05c6d0f46a3c39?cid=774b29d4f13844c495f206cafdad9c86",
+                "track_number": 2,
+                "type": "track",
+                "uri": "spotify:track:0K9v3Jq3mI0phzWbeKAiqc",
+            },
         },
         {
-            'added_at': '2020-09-04T16:43:12Z',
-            'track': {
-                'album': {
-                    'album_type': 'album',
-                    'artists': [
+            "added_at": "2020-09-04T16:43:12Z",
+            "track": {
+                "album": {
+                    "album_type": "album",
+                    "artists": [
                         {
-                            'external_urls': {
-                                'spotify': 'https://open.spotify.com/artist/0OTnx2X2FDXeewcm72lavT'
+                            "external_urls": {
+                                "spotify": "https://open.spotify.com/artist/0OTnx2X2FDXeewcm72lavT"
                             },
-                            'href': 'https://api.spotify.com/v1/artists/0OTnx2X2FDXeewcm72lavT',
-                            'id': '0OTnx2X2FDXeewcm72lavT',
-                            'name': 'Alison Krauss & Union Station',
-                            'type': 'artist',
-                            'uri': 'spotify:artist:0OTnx2X2FDXeewcm72lavT'
+                            "href": "https://api.spotify.com/v1/artists/0OTnx2X2FDXeewcm72lavT",
+                            "id": "0OTnx2X2FDXeewcm72lavT",
+                            "name": "Alison Krauss & Union Station",
+                            "type": "artist",
+                            "uri": "spotify:artist:0OTnx2X2FDXeewcm72lavT",
                         }
                     ],
-                    'available_markets': [
-                        '...'
-                    ],
-                    'external_urls': {
-                        'spotify': 'https://open.spotify.com/album/6FfrJoeF2HYdMsMLChPVVM'
+                    "available_markets": ["..."],
+                    "external_urls": {
+                        "spotify": "https://open.spotify.com/album/6FfrJoeF2HYdMsMLChPVVM"
                     },
-                    'href': 'https://api.spotify.com/v1/albums/6FfrJoeF2HYdMsMLChPVVM',
-                    'id': '6FfrJoeF2HYdMsMLChPVVM',
-                    'images': [
+                    "href": "https://api.spotify.com/v1/albums/6FfrJoeF2HYdMsMLChPVVM",
+                    "id": "6FfrJoeF2HYdMsMLChPVVM",
+                    "images": [
                         {
-                            'height': 640,
-                            'url': 'https://i.scdn.co/image/ab67616d0000b2735ba239901f0f0ff80937460f',
-                            'width': 640
+                            "height": 640,
+                            "url": "https://i.scdn.co/image/ab67616d0000b2735ba239901f0f0ff80937460f",
+                            "width": 640,
                         },
                         {
-                            'height': 300,
-                            'url': 'https://i.scdn.co/image/ab67616d00001e025ba239901f0f0ff80937460f',
-                            'width': 300
+                            "height": 300,
+                            "url": "https://i.scdn.co/image/ab67616d00001e025ba239901f0f0ff80937460f",
+                            "width": 300,
                         },
                         {
-                            'height': 64,
-                            'url': 'https://i.scdn.co/image/ab67616d000048515ba239901f0f0ff80937460f',
-                            'width': 64
-                        }
+                            "height": 64,
+                            "url": "https://i.scdn.co/image/ab67616d000048515ba239901f0f0ff80937460f",
+                            "width": 64,
+                        },
                     ],
-                    'name': 'New Favorite',
-                    'release_date': '2001-08-14',
-                    'release_date_precision': 'day',
-                    'total_tracks': 13,
-                    'type': 'album',
-                    'uri': 'spotify:album:6FfrJoeF2HYdMsMLChPVVM'
+                    "name": "New Favorite",
+                    "release_date": "2001-08-14",
+                    "release_date_precision": "day",
+                    "total_tracks": 13,
+                    "type": "album",
+                    "uri": "spotify:album:6FfrJoeF2HYdMsMLChPVVM",
                 },
-                'artists': [
+                "artists": [
                     {
-                        'external_urls': {
-                            'spotify': 'https://open.spotify.com/artist/0OTnx2X2FDXeewcm72lavT'
+                        "external_urls": {
+                            "spotify": "https://open.spotify.com/artist/0OTnx2X2FDXeewcm72lavT"
                         },
-                        'href': 'https://api.spotify.com/v1/artists/0OTnx2X2FDXeewcm72lavT',
-                        'id': '0OTnx2X2FDXeewcm72lavT',
-                        'name': 'Alison Krauss & Union Station',
-                        'type': 'artist',
-                        'uri': 'spotify:artist:0OTnx2X2FDXeewcm72lavT'
+                        "href": "https://api.spotify.com/v1/artists/0OTnx2X2FDXeewcm72lavT",
+                        "id": "0OTnx2X2FDXeewcm72lavT",
+                        "name": "Alison Krauss & Union Station",
+                        "type": "artist",
+                        "uri": "spotify:artist:0OTnx2X2FDXeewcm72lavT",
                     }
                 ],
-                'available_markets': [
-                    '...'
-                ],
-                'disc_number': 1,
-                'duration_ms': 280706,
-                'explicit': False,
-                'external_ids': {
-                    'isrc': 'USRO20149502'
+                "available_markets": ["..."],
+                "disc_number": 1,
+                "duration_ms": 280706,
+                "explicit": False,
+                "external_ids": {"isrc": "USRO20149502"},
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/track/5CJ1xQCFywhEryVUPJup5T"
                 },
-                'external_urls': {
-                    'spotify': 'https://open.spotify.com/track/5CJ1xQCFywhEryVUPJup5T'
-                },
-                'href': 'https://api.spotify.com/v1/tracks/5CJ1xQCFywhEryVUPJup5T',
-                'id': '5CJ1xQCFywhEryVUPJup5T',
-                'is_local': False,
-                'name': 'The Boy Who Wouldn\'t Hoe Corn',
-                'popularity': 43,
-                'preview_url': 'https://p.scdn.co/mp3-preview/ed7ba16c1f6474cfac1ad26d19eb7c47b7392b38?cid=774b29d4f13844c495f206cafdad9c86',
-                'track_number': 2,
-                'type': 'track',
-                'uri': 'spotify:track:5CJ1xQCFywhEryVUPJup5T'
-            }
-        }
+                "href": "https://api.spotify.com/v1/tracks/5CJ1xQCFywhEryVUPJup5T",
+                "id": "5CJ1xQCFywhEryVUPJup5T",
+                "is_local": False,
+                "name": "The Boy Who Wouldn't Hoe Corn",
+                "popularity": 43,
+                "preview_url": "https://p.scdn.co/mp3-preview/ed7ba16c1f6474cfac1ad26d19eb7c47b7392b38?cid=774b29d4f13844c495f206cafdad9c86",
+                "track_number": 2,
+                "type": "track",
+                "uri": "spotify:track:5CJ1xQCFywhEryVUPJup5T",
+            },
+        },
     ],
-    'limit': 2,
-    'next': 'https://api.spotify.com/v1/me/tracks?offset=3&limit=3',
-    'offset': 0,
-    'previous': None,
-    'total': 5
+    "limit": 2,
+    "next": "https://api.spotify.com/v1/me/tracks?offset=3&limit=3",
+    "offset": 0,
+    "previous": None,
+    "total": 5,
 }
 
 EXAMPLE_SAVED_TRACKS_TWO = {
-    'href': 'https://api.spotify.com/v1/me/tracks?offset=0&limit=3',
-    'items': [
+    "href": "https://api.spotify.com/v1/me/tracks?offset=0&limit=3",
+    "items": [
         {
-            'added_at': '2020-09-04T16:43:19Z',
-            'track': {
-                'album': {
-                    'album_type': 'single',
-                    'artists': [
+            "added_at": "2020-09-04T16:43:19Z",
+            "track": {
+                "album": {
+                    "album_type": "single",
+                    "artists": [
                         {
-                            'external_urls': {
-                                'spotify': 'https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI'
+                            "external_urls": {
+                                "spotify": "https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI"
                             },
-                            'href': 'https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI',
-                            'id': '0qzgOvNnbHiArRuXgkJfFI',
-                            'name': 'Beyond The Barricade',
-                            'type': 'artist',
-                            'uri': 'spotify:artist:0qzgOvNnbHiArRuXgkJfFI'
+                            "href": "https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI",
+                            "id": "0qzgOvNnbHiArRuXgkJfFI",
+                            "name": "Beyond The Barricade",
+                            "type": "artist",
+                            "uri": "spotify:artist:0qzgOvNnbHiArRuXgkJfFI",
                         }
                     ],
-                    'available_markets': [
-                        '...'
-                    ],
-                    'external_urls': {
-                        'spotify': 'https://open.spotify.com/album/0STdARrArJi55I4zbeSbx6'
+                    "available_markets": ["..."],
+                    "external_urls": {
+                        "spotify": "https://open.spotify.com/album/0STdARrArJi55I4zbeSbx6"
                     },
-                    'href': 'https://api.spotify.com/v1/albums/0STdARrArJi55I4zbeSbx6',
-                    'id': '0STdARrArJi55I4zbeSbx6',
-                    'images': [
+                    "href": "https://api.spotify.com/v1/albums/0STdARrArJi55I4zbeSbx6",
+                    "id": "0STdARrArJi55I4zbeSbx6",
+                    "images": [
                         {
-                            'height': 640,
-                            'url': 'https://i.scdn.co/image/ab67616d0000b2734fbf0642c674ea17daba8a7a',
-                            'width': 640
+                            "height": 640,
+                            "url": "https://i.scdn.co/image/ab67616d0000b2734fbf0642c674ea17daba8a7a",
+                            "width": 640,
                         },
                         {
-                            'height': 300,
-                            'url': 'https://i.scdn.co/image/ab67616d00001e024fbf0642c674ea17daba8a7a',
-                            'width': 300
+                            "height": 300,
+                            "url": "https://i.scdn.co/image/ab67616d00001e024fbf0642c674ea17daba8a7a",
+                            "width": 300,
                         },
                         {
-                            'height': 64,
-                            'url': 'https://i.scdn.co/image/ab67616d000048514fbf0642c674ea17daba8a7a',
-                            'width': 64
-                        }
+                            "height": 64,
+                            "url": "https://i.scdn.co/image/ab67616d000048514fbf0642c674ea17daba8a7a",
+                            "width": 64,
+                        },
                     ],
-                    'name': 'The Grey',
-                    'release_date': '2018-05-03',
-                    'release_date_precision': 'day',
-                    'total_tracks': 5,
-                    'type': 'album',
-                    'uri': 'spotify:album:0STdARrArJi55I4zbeSbx6'
+                    "name": "The Grey",
+                    "release_date": "2018-05-03",
+                    "release_date_precision": "day",
+                    "total_tracks": 5,
+                    "type": "album",
+                    "uri": "spotify:album:0STdARrArJi55I4zbeSbx6",
                 },
-                'artists': [
+                "artists": [
                     {
-                        'external_urls': {
-                            'spotify': 'https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI'
+                        "external_urls": {
+                            "spotify": "https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI"
                         },
-                        'href': 'https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI',
-                        'id': '0qzgOvNnbHiArRuXgkJfFI',
-                        'name': 'Beyond The Barricade',
-                        'type': 'artist',
-                        'uri': 'spotify:artist:0qzgOvNnbHiArRuXgkJfFI'
+                        "href": "https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI",
+                        "id": "0qzgOvNnbHiArRuXgkJfFI",
+                        "name": "Beyond The Barricade",
+                        "type": "artist",
+                        "uri": "spotify:artist:0qzgOvNnbHiArRuXgkJfFI",
                     }
                 ],
-                'available_markets': [
-                    '...'
-                ],
-                'disc_number': 1,
-                'duration_ms': 388906,
-                'explicit': False,
-                'external_ids': {
-                    'isrc': 'NOJKW1801020'
+                "available_markets": ["..."],
+                "disc_number": 1,
+                "duration_ms": 388906,
+                "explicit": False,
+                "external_ids": {"isrc": "NOJKW1801020"},
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/track/0K9v3Jq3mI0phzWbeKAiqc"
                 },
-                'external_urls': {
-                    'spotify': 'https://open.spotify.com/track/0K9v3Jq3mI0phzWbeKAiqc'
-                },
-                'href': 'https://api.spotify.com/v1/tracks/0K9v3Jq3mI0phzWbeKAiqc',
-                'id': '0K9v3Jq3mI0phzWbeKAiqc',
-                'is_local': False,
-                'name': 'The Grey',
-                'popularity': 3,
-                'preview_url': 'https://p.scdn.co/mp3-preview/f7bf29379d5cd635c437cccabb05c6d0f46a3c39?cid=774b29d4f13844c495f206cafdad9c86',
-                'track_number': 2,
-                'type': 'track',
-                'uri': 'spotify:track:0K9v3Jq3mI0phzWbeKAiqc'
-            }
+                "href": "https://api.spotify.com/v1/tracks/0K9v3Jq3mI0phzWbeKAiqc",
+                "id": "0K9v3Jq3mI0phzWbeKAiqc",
+                "is_local": False,
+                "name": "The Grey",
+                "popularity": 3,
+                "preview_url": "https://p.scdn.co/mp3-preview/f7bf29379d5cd635c437cccabb05c6d0f46a3c39?cid=774b29d4f13844c495f206cafdad9c86",
+                "track_number": 2,
+                "type": "track",
+                "uri": "spotify:track:0K9v3Jq3mI0phzWbeKAiqc",
+            },
         },
         {
-            'added_at': '2020-09-04T16:43:12Z',
-            'track': {
-                'album': {
-                    'album_type': 'album',
-                    'artists': [
+            "added_at": "2020-09-04T16:43:12Z",
+            "track": {
+                "album": {
+                    "album_type": "album",
+                    "artists": [
                         {
-                            'external_urls': {
-                                'spotify': 'https://open.spotify.com/artist/0OTnx2X2FDXeewcm72lavT'
+                            "external_urls": {
+                                "spotify": "https://open.spotify.com/artist/0OTnx2X2FDXeewcm72lavT"
                             },
-                            'href': 'https://api.spotify.com/v1/artists/0OTnx2X2FDXeewcm72lavT',
-                            'id': '0OTnx2X2FDXeewcm72lavT',
-                            'name': 'Alison Krauss & Union Station',
-                            'type': 'artist',
-                            'uri': 'spotify:artist:0OTnx2X2FDXeewcm72lavT'
+                            "href": "https://api.spotify.com/v1/artists/0OTnx2X2FDXeewcm72lavT",
+                            "id": "0OTnx2X2FDXeewcm72lavT",
+                            "name": "Alison Krauss & Union Station",
+                            "type": "artist",
+                            "uri": "spotify:artist:0OTnx2X2FDXeewcm72lavT",
                         }
                     ],
-                    'available_markets': [
-                        '...'
-                    ],
-                    'external_urls': {
-                        'spotify': 'https://open.spotify.com/album/6FfrJoeF2HYdMsMLChPVVM'
+                    "available_markets": ["..."],
+                    "external_urls": {
+                        "spotify": "https://open.spotify.com/album/6FfrJoeF2HYdMsMLChPVVM"
                     },
-                    'href': 'https://api.spotify.com/v1/albums/6FfrJoeF2HYdMsMLChPVVM',
-                    'id': '6FfrJoeF2HYdMsMLChPVVM',
-                    'images': [
+                    "href": "https://api.spotify.com/v1/albums/6FfrJoeF2HYdMsMLChPVVM",
+                    "id": "6FfrJoeF2HYdMsMLChPVVM",
+                    "images": [
                         {
-                            'height': 640,
-                            'url': 'https://i.scdn.co/image/ab67616d0000b2735ba239901f0f0ff80937460f',
-                            'width': 640
+                            "height": 640,
+                            "url": "https://i.scdn.co/image/ab67616d0000b2735ba239901f0f0ff80937460f",
+                            "width": 640,
                         },
                         {
-                            'height': 300,
-                            'url': 'https://i.scdn.co/image/ab67616d00001e025ba239901f0f0ff80937460f',
-                            'width': 300
+                            "height": 300,
+                            "url": "https://i.scdn.co/image/ab67616d00001e025ba239901f0f0ff80937460f",
+                            "width": 300,
                         },
                         {
-                            'height': 64,
-                            'url': 'https://i.scdn.co/image/ab67616d000048515ba239901f0f0ff80937460f',
-                            'width': 64
-                        }
+                            "height": 64,
+                            "url": "https://i.scdn.co/image/ab67616d000048515ba239901f0f0ff80937460f",
+                            "width": 64,
+                        },
                     ],
-                    'name': 'New Favorite',
-                    'release_date': '2001-08-14',
-                    'release_date_precision': 'day',
-                    'total_tracks': 13,
-                    'type': 'album',
-                    'uri': 'spotify:album:6FfrJoeF2HYdMsMLChPVVM'
+                    "name": "New Favorite",
+                    "release_date": "2001-08-14",
+                    "release_date_precision": "day",
+                    "total_tracks": 13,
+                    "type": "album",
+                    "uri": "spotify:album:6FfrJoeF2HYdMsMLChPVVM",
                 },
-                'artists': [
+                "artists": [
                     {
-                        'external_urls': {
-                            'spotify': 'https://open.spotify.com/artist/0OTnx2X2FDXeewcm72lavT'
+                        "external_urls": {
+                            "spotify": "https://open.spotify.com/artist/0OTnx2X2FDXeewcm72lavT"
                         },
-                        'href': 'https://api.spotify.com/v1/artists/0OTnx2X2FDXeewcm72lavT',
-                        'id': '0OTnx2X2FDXeewcm72lavT',
-                        'name': 'Alison Krauss & Union Station',
-                        'type': 'artist',
-                        'uri': 'spotify:artist:0OTnx2X2FDXeewcm72lavT'
+                        "href": "https://api.spotify.com/v1/artists/0OTnx2X2FDXeewcm72lavT",
+                        "id": "0OTnx2X2FDXeewcm72lavT",
+                        "name": "Alison Krauss & Union Station",
+                        "type": "artist",
+                        "uri": "spotify:artist:0OTnx2X2FDXeewcm72lavT",
                     }
                 ],
-                'available_markets': [
-                    '...'
-                ],
-                'disc_number': 1,
-                'duration_ms': 280706,
-                'explicit': False,
-                'external_ids': {
-                    'isrc': 'USRO20149502'
+                "available_markets": ["..."],
+                "disc_number": 1,
+                "duration_ms": 280706,
+                "explicit": False,
+                "external_ids": {"isrc": "USRO20149502"},
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/track/5CJ1xQCFywhEryVUPJup5T"
                 },
-                'external_urls': {
-                    'spotify': 'https://open.spotify.com/track/5CJ1xQCFywhEryVUPJup5T'
-                },
-                'href': 'https://api.spotify.com/v1/tracks/5CJ1xQCFywhEryVUPJup5T',
-                'id': '5CJ1xQCFywhEryVUPJup5T',
-                'is_local': False,
-                'name': 'The Boy Who Wouldn\'t Hoe Corn',
-                'popularity': 43,
-                'preview_url': 'https://p.scdn.co/mp3-preview/ed7ba16c1f6474cfac1ad26d19eb7c47b7392b38?cid=774b29d4f13844c495f206cafdad9c86',
-                'track_number': 2,
-                'type': 'track',
-                'uri': 'spotify:track:5CJ1xQCFywhEryVUPJup5T'
-            }
-        }
+                "href": "https://api.spotify.com/v1/tracks/5CJ1xQCFywhEryVUPJup5T",
+                "id": "5CJ1xQCFywhEryVUPJup5T",
+                "is_local": False,
+                "name": "The Boy Who Wouldn't Hoe Corn",
+                "popularity": 43,
+                "preview_url": "https://p.scdn.co/mp3-preview/ed7ba16c1f6474cfac1ad26d19eb7c47b7392b38?cid=774b29d4f13844c495f206cafdad9c86",
+                "track_number": 2,
+                "type": "track",
+                "uri": "spotify:track:5CJ1xQCFywhEryVUPJup5T",
+            },
+        },
     ],
-    'limit': 2,
-    'next': 'https://api.spotify.com/v1/me/tracks?offset=3&limit=3',
-    'offset': 2,
-    'previous': None,
-    'total': 5
+    "limit": 2,
+    "next": "https://api.spotify.com/v1/me/tracks?offset=3&limit=3",
+    "offset": 2,
+    "previous": None,
+    "total": 5,
 }
 
 EXAMPLE_SAVED_TRACKS_THREE = {
-    'href': 'https://api.spotify.com/v1/me/tracks?offset=0&limit=3',
-    'items': [
+    "href": "https://api.spotify.com/v1/me/tracks?offset=0&limit=3",
+    "items": [
         {
-            'added_at': '2020-09-04T16:43:19Z',
-            'track': {
-                'album': {
-                    'album_type': 'single',
-                    'artists': [
+            "added_at": "2020-09-04T16:43:19Z",
+            "track": {
+                "album": {
+                    "album_type": "single",
+                    "artists": [
                         {
-                            'external_urls': {
-                                'spotify': 'https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI'
+                            "external_urls": {
+                                "spotify": "https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI"
                             },
-                            'href': 'https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI',
-                            'id': '0qzgOvNnbHiArRuXgkJfFI',
-                            'name': 'Beyond The Barricade',
-                            'type': 'artist',
-                            'uri': 'spotify:artist:0qzgOvNnbHiArRuXgkJfFI'
+                            "href": "https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI",
+                            "id": "0qzgOvNnbHiArRuXgkJfFI",
+                            "name": "Beyond The Barricade",
+                            "type": "artist",
+                            "uri": "spotify:artist:0qzgOvNnbHiArRuXgkJfFI",
                         }
                     ],
-                    'available_markets': [
-                        '...'
-                    ],
-                    'external_urls': {
-                        'spotify': 'https://open.spotify.com/album/0STdARrArJi55I4zbeSbx6'
+                    "available_markets": ["..."],
+                    "external_urls": {
+                        "spotify": "https://open.spotify.com/album/0STdARrArJi55I4zbeSbx6"
                     },
-                    'href': 'https://api.spotify.com/v1/albums/0STdARrArJi55I4zbeSbx6',
-                    'id': '0STdARrArJi55I4zbeSbx6',
-                    'images': [
+                    "href": "https://api.spotify.com/v1/albums/0STdARrArJi55I4zbeSbx6",
+                    "id": "0STdARrArJi55I4zbeSbx6",
+                    "images": [
                         {
-                            'height': 640,
-                            'url': 'https://i.scdn.co/image/ab67616d0000b2734fbf0642c674ea17daba8a7a',
-                            'width': 640
+                            "height": 640,
+                            "url": "https://i.scdn.co/image/ab67616d0000b2734fbf0642c674ea17daba8a7a",
+                            "width": 640,
                         },
                         {
-                            'height': 300,
-                            'url': 'https://i.scdn.co/image/ab67616d00001e024fbf0642c674ea17daba8a7a',
-                            'width': 300
+                            "height": 300,
+                            "url": "https://i.scdn.co/image/ab67616d00001e024fbf0642c674ea17daba8a7a",
+                            "width": 300,
                         },
                         {
-                            'height': 64,
-                            'url': 'https://i.scdn.co/image/ab67616d000048514fbf0642c674ea17daba8a7a',
-                            'width': 64
-                        }
+                            "height": 64,
+                            "url": "https://i.scdn.co/image/ab67616d000048514fbf0642c674ea17daba8a7a",
+                            "width": 64,
+                        },
                     ],
-                    'name': 'The Grey',
-                    'release_date': '2018-05-03',
-                    'release_date_precision': 'day',
-                    'total_tracks': 5,
-                    'type': 'album',
-                    'uri': 'spotify:album:0STdARrArJi55I4zbeSbx6'
+                    "name": "The Grey",
+                    "release_date": "2018-05-03",
+                    "release_date_precision": "day",
+                    "total_tracks": 5,
+                    "type": "album",
+                    "uri": "spotify:album:0STdARrArJi55I4zbeSbx6",
                 },
-                'artists': [
+                "artists": [
                     {
-                        'external_urls': {
-                            'spotify': 'https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI'
+                        "external_urls": {
+                            "spotify": "https://open.spotify.com/artist/0qzgOvNnbHiArRuXgkJfFI"
                         },
-                        'href': 'https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI',
-                        'id': '0qzgOvNnbHiArRuXgkJfFI',
-                        'name': 'Beyond The Barricade',
-                        'type': 'artist',
-                        'uri': 'spotify:artist:0qzgOvNnbHiArRuXgkJfFI'
+                        "href": "https://api.spotify.com/v1/artists/0qzgOvNnbHiArRuXgkJfFI",
+                        "id": "0qzgOvNnbHiArRuXgkJfFI",
+                        "name": "Beyond The Barricade",
+                        "type": "artist",
+                        "uri": "spotify:artist:0qzgOvNnbHiArRuXgkJfFI",
                     }
                 ],
-                'available_markets': [
-                    '...'
-                ],
-                'disc_number': 1,
-                'duration_ms': 388906,
-                'explicit': False,
-                'external_ids': {
-                    'isrc': 'NOJKW1801020'
+                "available_markets": ["..."],
+                "disc_number": 1,
+                "duration_ms": 388906,
+                "explicit": False,
+                "external_ids": {"isrc": "NOJKW1801020"},
+                "external_urls": {
+                    "spotify": "https://open.spotify.com/track/0K9v3Jq3mI0phzWbeKAiqc"
                 },
-                'external_urls': {
-                    'spotify': 'https://open.spotify.com/track/0K9v3Jq3mI0phzWbeKAiqc'
-                },
-                'href': 'https://api.spotify.com/v1/tracks/0K9v3Jq3mI0phzWbeKAiqc',
-                'id': '0K9v3Jq3mI0phzWbeKAiqc',
-                'is_local': False,
-                'name': 'The Grey',
-                'popularity': 3,
-                'preview_url': 'https://p.scdn.co/mp3-preview/f7bf29379d5cd635c437cccabb05c6d0f46a3c39?cid=774b29d4f13844c495f206cafdad9c86',
-                'track_number': 2,
-                'type': 'track',
-                'uri': 'spotify:track:0K9v3Jq3mI0phzWbeKAiqc'
-            }
+                "href": "https://api.spotify.com/v1/tracks/0K9v3Jq3mI0phzWbeKAiqc",
+                "id": "0K9v3Jq3mI0phzWbeKAiqc",
+                "is_local": False,
+                "name": "The Grey",
+                "popularity": 3,
+                "preview_url": "https://p.scdn.co/mp3-preview/f7bf29379d5cd635c437cccabb05c6d0f46a3c39?cid=774b29d4f13844c495f206cafdad9c86",
+                "track_number": 2,
+                "type": "track",
+                "uri": "spotify:track:0K9v3Jq3mI0phzWbeKAiqc",
+            },
         }
     ],
-    'limit': 2,
-    'next': None,
-    'offset': 4,
-    'previous': None,
-    'total': 5
+    "limit": 2,
+    "next": None,
+    "offset": 4,
+    "previous": None,
+    "total": 5,
 }
 
 
@@ -545,5 +505,5 @@ def mock_saved_tracks():
     return [
         EXAMPLE_SAVED_TRACKS_ONE,
         EXAMPLE_SAVED_TRACKS_TWO,
-        EXAMPLE_SAVED_TRACKS_THREE
+        EXAMPLE_SAVED_TRACKS_THREE,
     ]
