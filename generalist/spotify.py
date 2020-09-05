@@ -77,3 +77,18 @@ def request_access_token(code: str) -> str:
         raise Exception(f'Unable to get access token: {error}')
 
     return data['access_token']
+
+
+def verify_access_token(access_token: str) -> bool:
+    """Checks if the access token is valid by making a request."""
+    response = requests.get(
+        'https://api.spotify.com/v1/me',
+        headers={'Authorization': f'Bearer {access_token}'})
+
+    if response.status_code == 200:
+        return True
+
+    if response.status_code == 401:
+        return False
+
+    raise Exception(f'Unhandled status ({response.status_code})')

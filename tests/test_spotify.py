@@ -126,3 +126,31 @@ def test_request_access_token_fail(requests_mock):
         spotify.request_access_token('letmein')
 
     assert str(err.value) == 'Unable to get access token: no'
+
+
+@patch('generalist.spotify.requests')
+def test_verify_access_token_yes(requests_mock):
+    requests_mock.get.return_value = _mock_response(200, {})
+
+    result = spotify.verify_access_token('letmein')
+
+    assert result is True
+
+
+@patch('generalist.spotify.requests')
+def test_verify_access_token_no(requests_mock):
+    requests_mock.get.return_value = _mock_response(401, {})
+
+    result = spotify.verify_access_token('letmein')
+
+    assert result is False
+
+
+@patch('generalist.spotify.requests')
+def test_verify_access_token_fail(requests_mock):
+    requests_mock.get.return_value = _mock_response(418, {})
+
+    with pytest.raises(Exception) as err:
+        spotify.verify_access_token('letmein')
+
+    assert str(err.value) == 'Unhandled status (418)'

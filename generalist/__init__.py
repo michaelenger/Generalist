@@ -111,7 +111,7 @@ def get_saved_tracks(access_token: str):
 def login_user() -> Optional[str]:
     """Login the user, if need be, returning the access token."""
     access_token = _read_access_token()
-    if access_token is not None:
+    if access_token and spotify.verify_access_token(access_token):
         return access_token
 
     url = spotify.get_login_url()

@@ -53,10 +53,14 @@ def test_get_saved_tracks(spotify_mock, mock_artists, mock_saved_tracks):
 
 @patch('generalist._read_access_token')
 @patch('generalist.HTTPServer')
+@patch('generalist.spotify')
 @patch('generalist.webbrowser')
-def test_login_user(webbrowser_mock, HTTPServer_mock, _read_access_token_mock):
+def test_login_user(
+        webbrowser_mock, spotify_mock, HTTPServer_mock,
+        _read_access_token_mock):
     _read_access_token_mock.side_effect = [
         None, 'nowitworks']
+    spotify_mock.verify_access_token.return_value = False
 
     result = generalist.login_user()
 
@@ -68,10 +72,13 @@ def test_login_user(webbrowser_mock, HTTPServer_mock, _read_access_token_mock):
 
 @patch('generalist._read_access_token')
 @patch('generalist.HTTPServer')
+@patch('generalist.spotify')
 @patch('generalist.webbrowser')
 def test_login_user_file_exists(
-        webbrowser_mock, HTTPServer_mock, _read_access_token_mock):
+        webbrowser_mock, spotify_mock, HTTPServer_mock,
+        _read_access_token_mock):
     _read_access_token_mock.return_value = 'supersecure'
+    spotify_mock.verify_access_token.return_value = True
 
     result = generalist.login_user()
 
@@ -79,3 +86,21 @@ def test_login_user_file_exists(
 
     webbrowser_mock.open.assert_not_called()
     HTTPServer_mock().serve_forever.assert_not_called()
+
+
+@patch('generalist._read_access_token')
+@patch('generalist.HTTPServer')
+@patch('generalist.spotify')
+@patch('generalist.webbrowser')
+def test_login_user_not_verified(
+        webbrowser_mock, spotify_mock, HTTPServer_mock,
+        _read_access_token_mock):
+    _read_access_token_mock.return_value = 'supersecure'
+    spotify_mock.verify_access_token.return_value = False
+
+    result = generalist.login_user()
+
+    assert result == 'supersecure'
+
+    webbrowser_mock.open.assert_called()
+    HTTPServer_mock().serve_forever.assert_called()
