@@ -33,7 +33,7 @@ def _get(
 
 def get_artists(access_token: str, artist_ids: List[str]) -> list:
     """Get a paginated list of the user's saved tracks."""
-    response = _get(f'/artists', access_token, {'ids': ','.join(artist_ids)})
+    response = _get('/artists', access_token, {'ids': ','.join(artist_ids)})
     return response['artists']
 
 
