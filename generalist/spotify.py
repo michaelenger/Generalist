@@ -22,7 +22,11 @@ def _get(
 
     data = response.json()
     if response.status_code != 200:
-        raise Exception(data['error_description'])
+        message = (
+            data['error_description']
+            if 'error_description' in data
+            else data['error']['message'])
+        raise Exception(message)
 
     return data
 
