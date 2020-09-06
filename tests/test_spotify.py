@@ -65,6 +65,53 @@ def test_get_fail(requests_mock, uri, token, query_params, error):
     )
 
 
+@pytest.mark.parametrize(
+    "uri, token, data",
+    [
+        ("/me", "token", {"id": 123, "name": "UserMan"}),
+        ("/artists/321", "safetyfirst", {"id": 123, "name": "🥶"}),
+        ("/tracks", "yes", {"explosions": "yes"}),
+    ],
+)
+@patch("generalist.spotify.requests")
+def test_post(requests_mock, uri, token, data):
+    requests_mock.post.return_value = _mock_response(200, {"success": True})
+
+    result = spotify._post(uri, token, data)
+
+    assert result == {"success": True}
+
+    requests_mock.post.assert_called_with(
+        f"https://api.spotify.com/v1{uri}",
+        headers={"Authorization": f"Bearer {token}"},
+        data=data,
+    )
+
+
+@pytest.mark.parametrize(
+    "uri, token, data, error",
+    [
+        ("/me", "token", {"id": 123, "name": "UserMan"}, "Something bad"),
+        ("/artists/321", "safetyfirst", {"id": 123, "name": "🥶"}, "Not today, satan"),
+        ("/tracks", "yes", {"explosions": "yes"}, "Cannot find it"),
+    ],
+)
+@patch("generalist.spotify.requests")
+def test_post_fail(requests_mock, uri, token, data, error):
+    requests_mock.post.return_value = _mock_response(400, {"error": {"message": error}})
+
+    with pytest.raises(Exception) as err:
+        spotify._post(uri, token, data)
+
+    assert str(err.value) == error
+
+    requests_mock.post.assert_called_with(
+        f"https://api.spotify.com/v1{uri}",
+        headers={"Authorization": f"Bearer {token}"},
+        data=data,
+    )
+
+
 @patch("generalist.spotify._get")
 def test_get_artists(get_mock):
     artist_data = [{"id": "0qzgOvNnbHiArRuXgkJfFI"}]

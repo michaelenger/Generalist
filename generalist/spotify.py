@@ -29,6 +29,20 @@ def _get(uri: str, access_token: str, query_params: Optional[dict] = None) -> di
     return data
 
 
+def _post(uri: str, access_token: str, data: dict) -> dict:
+    """Send a POST request to the Spotify API."""
+    url = f"https://api.spotify.com/v1{uri}"
+    response = requests.post(
+        url, data=data, headers={"Authorization": f"Bearer {access_token}"}
+    )
+
+    data = response.json()
+    if response.status_code != 200:
+        raise Exception(data["error"]["message"])
+
+    return data
+
+
 def get_artists(access_token: str, artist_ids: List[str]) -> list:
     """Get a paginated list of the user's saved tracks."""
     response = _get("/artists", access_token, {"ids": ",".join(artist_ids)})
