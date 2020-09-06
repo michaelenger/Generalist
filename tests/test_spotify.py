@@ -113,6 +113,20 @@ def test_post_fail(requests_mock, uri, token, data, error):
 
 
 @patch("generalist.spotify._post")
+def test_add_to_playlist(post_mock):
+    post_mock.return_value = {"success": True}
+    result = spotify.add_to_playlist("token", "abc123", ["a", "b", "c"])
+
+    assert result == {"success": True}
+
+    post_mock.assert_called_with(
+        "/playlists/abc123/tracks",
+        "token",
+        {"uris": "spotify:track:a,spotify:track:b,spotify:track:c"},
+    )
+
+
+@patch("generalist.spotify._post")
 def test_create_playlist(post_mock):
     post_mock.return_value = {"success": True}
     result = spotify.create_playlist(

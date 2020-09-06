@@ -43,6 +43,17 @@ def _post(uri: str, access_token: str, data: dict) -> dict:
     return data
 
 
+def add_to_playlist(access_token: str, playlist_id: str, track_ids: list):
+    """Add tracks to a playlist."""
+    uris = ",".join([f"spotify:track:{track_id}" for track_id in track_ids])
+
+    return _post(
+        f"/playlists/{playlist_id}/tracks",
+        access_token,
+        {"uris": uris},
+    )
+
+
 def create_playlist(
     access_token: str, user_id: str, name: str, description: str, public: bool
 ) -> dict:
