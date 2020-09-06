@@ -36,8 +36,12 @@ def test_create_playlist(spotify_mock, mock_user, mock_playlist):
 
     assert result == mock_playlist
 
-    spotify_mock.create_playlist.assert_called_with(token, mock_user["id"], playlist_name, "Made via Generalist", False)
-    spotify_mock.add_to_playlist.assert_called_with(token, mock_playlist["id"], ["a", "b", "c", "d"])
+    spotify_mock.create_playlist.assert_called_with(
+        token, mock_user["id"], playlist_name, "Made via Generalist", False
+    )
+    spotify_mock.add_to_playlist.assert_called_with(
+        token, mock_playlist["id"], ["a", "b", "c", "d"]
+    )
 
 
 @patch("generalist.spotify")

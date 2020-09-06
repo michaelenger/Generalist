@@ -61,12 +61,15 @@ def create_playlist(access_token: str, playlist_name: str, track_ids: list) -> d
     current_user = spotify.get_current_user(access_token)
 
     playlist = spotify.create_playlist(
-        access_token, current_user["id"], playlist_name, "Made via Generalist", False)
+        access_token, current_user["id"], playlist_name, "Made via Generalist", False
+    )
 
     bunch_amount = 20  # for safety's sake
 
     for i in range(0, len(track_ids), bunch_amount):
-        spotify.add_to_playlist(access_token, playlist["id"], track_ids[i : i + bunch_amount])
+        spotify.add_to_playlist(
+            access_token, playlist["id"], track_ids[i : i + bunch_amount]
+        )
 
     return playlist
 

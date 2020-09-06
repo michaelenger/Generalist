@@ -85,7 +85,7 @@ def test_post(requests_mock, uri, token, data):
         f"https://api.spotify.com/v1{uri}",
         headers={"Authorization": f"Bearer {token}"},
         json=data,
-        params=None
+        params=None,
     )
 
 
@@ -110,7 +110,7 @@ def test_post_fail(requests_mock, uri, token, data, error):
         f"https://api.spotify.com/v1{uri}",
         headers={"Authorization": f"Bearer {token}"},
         json=data,
-        params=None
+        params=None,
     )
 
 
