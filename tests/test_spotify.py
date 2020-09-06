@@ -77,6 +77,17 @@ def test_get_artists(get_mock):
     get_mock.assert_called_with("/artists", "token", {"ids": "id123,lol,🩰"})
 
 
+@patch("generalist.spotify._get")
+def test_get_current_user(get_mock, mock_user):
+    get_mock.return_value = mock_user
+
+    result = spotify.get_current_user("token")
+
+    assert result == mock_user
+
+    get_mock.assert_called_with("/me", "token")
+
+
 def test_get_login_url():
     result = spotify.get_login_url()
     expected = (

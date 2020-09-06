@@ -35,6 +35,11 @@ def get_artists(access_token: str, artist_ids: List[str]) -> list:
     return response["artists"]
 
 
+def get_current_user(access_token: str) -> dict:
+    """Get the current user."""
+    return _get("/me", access_token)
+
+
 def get_login_url() -> str:
     """Get the login URL."""
     base_url = "https://accounts.spotify.com/authorize?"
