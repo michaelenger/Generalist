@@ -170,7 +170,7 @@ def test_get_login_url():
     expected = (
         "https://accounts.spotify.com/authorize"
         "?client_id=" + config.SPOTIFY_CLIENT_ID + "&response_type=code"
-        "&scope=user-library-read"
+        "&scope=user-library-read%2Cplaylist-modify-private"
         "&redirect_uri=http%3A%2F%2Flocalhost%3A1337%2Fauth"
     )
 
