@@ -3,6 +3,7 @@
 import argparse
 
 import generalist
+from generalist import utils
 
 
 def list_tracks(args: argparse.Namespace):
@@ -10,6 +11,8 @@ def list_tracks(args: argparse.Namespace):
     token = generalist.login_user()
     tracks = generalist.get_saved_tracks(token)
 
+    if args.sorted:
+        tracks = utils.sort_track_list(tracks)
 
     for track in tracks:
         print("{artists} - {track} ({genres})".format(
@@ -28,6 +31,7 @@ if __name__ == "__main__":
         metavar="command")
 
     tracks_parser = subparsers.add_parser("tracks", help="list all saved tracks (default command)")
+    tracks_parser.add_argument("--sorted", help="sort list of tracks", action="store_true")
     tracks_parser.set_defaults(handle=list_tracks)
 
     args = parser.parse_args()

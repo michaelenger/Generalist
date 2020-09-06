@@ -507,3 +507,73 @@ def mock_saved_tracks():
         EXAMPLE_SAVED_TRACKS_TWO,
         EXAMPLE_SAVED_TRACKS_THREE,
     ]
+
+
+@pytest.fixture
+def mock_tracks():
+    return [
+        {
+            "id": "7b3MzbGB0aivEID99gCziJ",
+            "name": "I Hate Hartley",
+            "artists": ["The Amity Affliction"],
+            "genres": ["australian metalcore", "melodic metalcore", "metalcore"],
+        },
+        {
+            "id": "4qOeqS6CcGfCqGGiTauPLx",
+            "name": "North Atlantic Vs North Carolina",
+            "artists": ["Memphis May Fire"],
+            "genres": ["melodic metalcore", "metalcore", "post-screamo", "screamo"],
+        },
+        {
+            "id": "4AcFasviRreFQMBVdwo97k",
+            "name": "The Biggest Lie",
+            "artists": ["ROUGH STONE"],
+            "genres": [],
+        },
+        {
+            "id": "3fxHUQGwXjmHxeSx4CxYH4",
+            "name": "Freddy Kreuger",
+            "artists": ["Reuben"],
+            "genres": [
+                "british alternative rock",
+                "math pop",
+                "modern alternative rock",
+                "uk post-hardcore",
+            ],
+        },
+    ]
+
+
+@pytest.fixture
+def mock_tracks_sorted():
+    return [
+        {
+            "id": "4qOeqS6CcGfCqGGiTauPLx",
+            "name": "North Atlantic Vs North Carolina",
+            "artists": ["Memphis May Fire"],
+            "genres": ["melodic metalcore", "metalcore", "post-screamo", "screamo"],
+        },
+        {
+            "id": "3fxHUQGwXjmHxeSx4CxYH4",
+            "name": "Freddy Kreuger",
+            "artists": ["Reuben"],
+            "genres": [
+                "british alternative rock",
+                "math pop",
+                "modern alternative rock",
+                "uk post-hardcore",
+            ],
+        },
+        {
+            "id": "4AcFasviRreFQMBVdwo97k",
+            "name": "The Biggest Lie",
+            "artists": ["ROUGH STONE"],
+            "genres": [],
+        },
+        {
+            "id": "7b3MzbGB0aivEID99gCziJ",
+            "name": "I Hate Hartley",
+            "artists": ["The Amity Affliction"],
+            "genres": ["australian metalcore", "melodic metalcore", "metalcore"],
+        },
+    ]
