@@ -23,12 +23,32 @@ def list_artists(args: argparse.Namespace):
         print(f"{artist} ({amount})")
 
 
+def list_genres(args: argparse.Namespace):
+    token = generalist.login_user()
+    tracks = generalist.get_saved_tracks(token)
+    genres = {}
+
+    for track in tracks:
+        for genre in track["genres"]:
+            if genre not in genres:
+                genres[genre] = 0
+            genres[genre] = genres[genre] + 1
+
+    if args.alpha:
+        genres = dict(sorted(genres.items(), key=lambda item: item[0]))
+    else:
+        genres = dict(sorted(genres.items(), key=lambda item: item[1], reverse=True))
+
+    for genre, amount in genres.items():
+        print(f"{genre} ({amount})")
+
+
 def list_tracks(args: argparse.Namespace):
     """Show a list of the saved tracks."""
     token = generalist.login_user()
     tracks = generalist.get_saved_tracks(token)
 
-    if args.sorted:
+    if args.alpha:
         tracks = utils.sort_track_list(tracks)
 
     for track in tracks:
@@ -48,11 +68,15 @@ if __name__ == "__main__":
         metavar="command")
 
     tracks_parser = subparsers.add_parser("tracks", help="list all saved tracks (default command)")
-    tracks_parser.add_argument("--sorted", help="sort list of tracks", action="store_true")
+    tracks_parser.add_argument("--alpha", help="sort list of tracks alphabetical", action="store_true")
     tracks_parser.set_defaults(handle=list_tracks)
 
     artists_parser = subparsers.add_parser("artists", help="list artists from the saved tracks")
     artists_parser.set_defaults(handle=list_artists)
+
+    genres_parser = subparsers.add_parser("genres", help="list genres from the saved tracks")
+    genres_parser.add_argument("--alpha", help="sort list of genres alphabetically", action="store_true")
+    genres_parser.set_defaults(handle=list_genres)
 
     args = parser.parse_args()
     if not hasattr(args, "handle"):

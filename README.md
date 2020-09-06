@@ -34,7 +34,8 @@ python main.py --help
 ### Commands
 
 * `artists` Show a list of the artists from the user's saved tracks
-* `tracks` Show a list of the user's saved tracks
+* `genres` Show a list of the genres from the user's saved tracks
+* `tracks` Show a list of the user's saved tracks (default command)
 
 ## Testing
 
