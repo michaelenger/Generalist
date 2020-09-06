@@ -6,6 +6,19 @@ import generalist
 from generalist import utils
 
 
+def create_playlist(args):
+    """Create a playlist with the tracks in the playlist."""
+    token = generalist.login_user()
+    tracks = generalist.get_saved_tracks(token)
+
+    tracks = list(filter(lambda x: args.genre in x["genres"], tracks))
+    playlist_name = args.name or f"Generalist: {args.genre}"
+    track_ids = [track["id"] for track in tracks]
+
+    generalist.create_playlist(token, playlist_name, track_ids)
+    print(f"Created playlist: {playlist_name}")
+
+
 def list_artists(args: argparse.Namespace):
     """Show a list of the artists from the saved tracks."""
     token = generalist.login_user()
@@ -100,6 +113,11 @@ if __name__ == "__main__":
     list_parser.add_argument("genre", help="name of the genre")
     list_parser.add_argument("-a, --alpha", dest="alpha", help="sort list of tracks alphabetically", action="store_true")
     list_parser.set_defaults(handle=list_genre_tracks)
+
+    create_parser = subparsers.add_parser("create", help="create a playlist based on the genre")
+    create_parser.add_argument("genre", help="name of the genre")
+    create_parser.add_argument("--name", dest="name", help="name of the playlist")
+    create_parser.set_defaults(handle=create_playlist)
 
     args = parser.parse_args()
     if not hasattr(args, "handle"):

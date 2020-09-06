@@ -510,6 +510,27 @@ def mock_saved_tracks():
 
 
 @pytest.fixture
+def mock_playlist():
+    return {
+        'collaborative': False,
+        'description': 'Made via Generalist',
+        'external_urls': {'spotify': 'https://open.spotify.com/playlist/0BzfcK6UiDxD55YcJBqUsV'},
+        'followers': {'href': None, 'total': 0},
+        'href': 'https://api.spotify.com/v1/playlists/0BzfcK6UiDxD55YcJBqUsV',
+        'id': '0BzfcK6UiDxD55YcJBqUsV',
+        'images': [],
+        'name': 'Generalist: country rap',
+        'owner': {},
+        'primary_color': None,
+        'public': False,
+        'snapshot_id': 'MSw2NzdmODg3ZjYxOWE1N2ZmMzQwZmIxN2Y4NDUyZGM4OWJmYjY1YTRl',
+        'tracks': {'href': 'https://api.spotify.com/v1/playlists/0BzfcK6UiDxD55YcJBqUsV/tracks', 'items': [], 'limit': 100, 'next': None, 'offset': 0, 'previous': None, 'total': 0},
+        'type': 'playlist',
+        'uri': 'spotify:playlist:0BzfcK6UiDxD55YcJBqUsV'
+    }
+
+
+@pytest.fixture
 def mock_tracks():
     return [
         {

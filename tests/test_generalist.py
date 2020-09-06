@@ -24,6 +24,23 @@ def test_read_access_token_fail(open_mock):
 
 
 @patch("generalist.spotify")
+def test_create_playlist(spotify_mock, mock_user, mock_playlist):
+    token = "letmein"
+    playlist_name = "Infinite Explosions"
+    track_ids = ["a", "b", "c", "d"]
+
+    spotify_mock.get_current_user.return_value = mock_user
+    spotify_mock.create_playlist.return_value = mock_playlist
+
+    result = generalist.create_playlist(token, playlist_name, track_ids)
+
+    assert result == mock_playlist
+
+    spotify_mock.create_playlist.assert_called_with(token, mock_user["id"], playlist_name, "Made via Generalist", False)
+    spotify_mock.add_to_playlist.assert_called_with(token, mock_playlist["id"], ["a", "b", "c", "d"])
+
+
+@patch("generalist.spotify")
 def test_get_saved_tracks(spotify_mock, mock_artists, mock_saved_tracks):
     spotify_mock.get_saved_tracks.side_effect = mock_saved_tracks
     spotify_mock.get_artists.return_value = mock_artists

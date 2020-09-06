@@ -34,6 +34,7 @@ python main.py --help
 ### Commands
 
 * `artists` Show a list of the artists from the user's saved tracks
+* `create` Create a playlist based on a genre
 * `genres` Show a list of the genres from the user's saved tracks
 * `list` List all the saved tracks in a genre
 * `tracks` Show a list of the user's saved tracks (default command)
