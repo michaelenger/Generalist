@@ -29,15 +29,15 @@ def _get(uri: str, access_token: str, query_params: Optional[dict] = None) -> di
     return data
 
 
-def _post(uri: str, access_token: str, data: dict) -> dict:
+def _post(uri: str, access_token: str, data: Optional[dict] = None, query_params: Optional[dict] = None) -> dict:
     """Send a POST request to the Spotify API."""
     url = f"https://api.spotify.com/v1{uri}"
     response = requests.post(
-        url, data=data, headers={"Authorization": f"Bearer {access_token}"}
+        url, params=query_params, json=data, headers={"Authorization": f"Bearer {access_token}"}
     )
 
     data = response.json()
-    if response.status_code != 200:
+    if response.status_code != 200 and response.status_code != 201:
         raise Exception(data["error"]["message"])
 
     return data
@@ -50,6 +50,7 @@ def add_to_playlist(access_token: str, playlist_id: str, track_ids: list):
     return _post(
         f"/playlists/{playlist_id}/tracks",
         access_token,
+        None,
         {"uris": uris},
     )
 

@@ -84,7 +84,8 @@ def test_post(requests_mock, uri, token, data):
     requests_mock.post.assert_called_with(
         f"https://api.spotify.com/v1{uri}",
         headers={"Authorization": f"Bearer {token}"},
-        data=data,
+        json=data,
+        params=None
     )
 
 
@@ -108,7 +109,8 @@ def test_post_fail(requests_mock, uri, token, data, error):
     requests_mock.post.assert_called_with(
         f"https://api.spotify.com/v1{uri}",
         headers={"Authorization": f"Bearer {token}"},
-        data=data,
+        json=data,
+        params=None
     )
 
 
@@ -122,6 +124,7 @@ def test_add_to_playlist(post_mock):
     post_mock.assert_called_with(
         "/playlists/abc123/tracks",
         "token",
+        None,
         {"uris": "spotify:track:a,spotify:track:b,spotify:track:c"},
     )
 
