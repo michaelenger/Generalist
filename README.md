@@ -9,7 +9,7 @@ Script for generating playlists based on the genres of your liked songs in Spoti
 * A Spotify application API key (see the [developer documentation](https://developer.spotify.com/))
 
 
-## Usage
+## Running
 
 Create an application in the [Spotify Developer portal](https://developer.spotify.com/) and make sure that one of the redirect URIs is: `http://localhost:1337/auth`
 
@@ -28,8 +28,12 @@ cp .env.shadow .env
 Run the script:
 
 ```shell
-python main.py
+python main.py --help
 ```
+
+### Commands
+
+* `tracks` Show a list of the user's saved tracks
 
 ## Testing
 
