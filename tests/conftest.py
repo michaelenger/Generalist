@@ -577,3 +577,17 @@ def mock_tracks_sorted():
             "genres": ["australian metalcore", "melodic metalcore", "metalcore"],
         },
     ]
+
+
+@pytest.fixture
+def mock_user():
+    return {
+        "display_name": "michaelenger",
+        "external_urls": {"spotify": "https://open.spotify.com/user/michaelenger"},
+        "followers": {"href": None, "total": 24},
+        "href": "https://api.spotify.com/v1/users/michaelenger",
+        "id": "michaelenger",
+        "images": [],
+        "type": "user",
+        "uri": "spotify:user:michaelenger",
+    }

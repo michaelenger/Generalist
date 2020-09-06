@@ -43,6 +43,17 @@ def _post(uri: str, access_token: str, data: dict) -> dict:
     return data
 
 
+def create_playlist(
+    access_token: str, user_id: str, name: str, description: str, public: bool
+) -> dict:
+    """Create a playlist."""
+    return _post(
+        f"/users/{user_id}/playlists",
+        access_token,
+        {"name": name, "description": description, "public": public},
+    )
+
+
 def get_artists(access_token: str, artist_ids: List[str]) -> list:
     """Get a paginated list of the user's saved tracks."""
     response = _get("/artists", access_token, {"ids": ",".join(artist_ids)})

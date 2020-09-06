@@ -112,6 +112,22 @@ def test_post_fail(requests_mock, uri, token, data, error):
     )
 
 
+@patch("generalist.spotify._post")
+def test_create_playlist(post_mock):
+    post_mock.return_value = {"success": True}
+    result = spotify.create_playlist(
+        "token", "abc", "Praylist", "Christian songs.", True
+    )
+
+    assert result == {"success": True}
+
+    post_mock.assert_called_with(
+        "/users/abc/playlists",
+        "token",
+        {"name": "Praylist", "description": "Christian songs.", "public": True},
+    )
+
+
 @patch("generalist.spotify._get")
 def test_get_artists(get_mock):
     artist_data = [{"id": "0qzgOvNnbHiArRuXgkJfFI"}]
